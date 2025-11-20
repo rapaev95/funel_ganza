@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ Цветотипа</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="glow-effect glow-top"></div>
+        <div class="glow-effect glow-bottom"></div>
+
+        <!-- Screen 1: Upload -->
+        <div id="screen-upload" class="screen active">
+            <div class="brand-name">FlowerFire</div>
+
+            <h1>Узнай свой идеальный цвет</h1>
+            <p class="subtitle">Загрузи фото, и AI подберет худи, которое подчеркнет твою внешность.</p>
+
+            <!-- Benefits Section -->
+            <div class="benefits">
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚡</div>
+                    <div class="benefit-text">
+                        <strong>За 30 секунд</strong>
+                        <span>Мгновенный анализ</span>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎨</div>
+                    <div class="benefit-text">
+                        <strong>100% точность</strong>
+                        <span>AI цветотипирование</span>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">👗</div>
+                    <div class="benefit-text">
+                        <strong>Персональный стиль</strong>
+                        <span>Только для тебя</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upload-area" id="upload-area">
+                <div class="icon">📸</div>
+                <p>Нажми, чтобы выбрать фото</p>
+                <input type="file" id="file-input" accept="image/*" hidden>
+            </div>
+
+            <button id="btn-analyze" class="btn-primary" disabled>Анализировать</button>
+        </div>
+
+        <!-- Screen 2: Loader -->
+        <div id="screen-loader" class="screen">
+            <div class="loader"></div>
+            <p>AI анализирует твой цветотип...</p>
+        </div>
+
+        <!-- Screen 3: Result -->
+        <div id="screen-result" class="screen">
+            <h2>Твой цветотип: <span id="result-season" class="highlight">...</span></h2>
+            <p id="result-desc">Тебе идеально подойдут глубокие, насыщенные тона.</p>
+
+            <!-- Color Palette -->
+            <div class="color-palette">
+                <div class="palette-title">Твоя палитра</div>
+                <div class="palette-colors" id="palette-colors">
+                    <div class="color-swatch" style="background: #2C3E50;"></div>
+                    <div class="color-swatch" style="background: #E74C3C;"></div>
+                    <div class="color-swatch" style="background: #8E44AD;"></div>
+                    <div class="color-swatch" style="background: #27AE60;"></div>
+                </div>
+            </div>
+
+            <!-- Outfit Preview -->
+            <div class="outfit-preview">
+                <div class="outfit-title">Твой идеальный образ</div>
+                <div class="outfit-card">
+                    <div class="outfit-silhouette">
+                        <div class="silhouette-head"></div>
+                        <div class="silhouette-body">
+                            <div class="hoodie-overlay" id="hoodie-overlay"></div>
+                        </div>
+                    </div>
+                    <div class="outfit-details">
+                        <div class="style-tag">✨ Персональная рекомендация</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card -->
+            <div class="product-card">
+                <img id="product-image" src="" alt="Recommended Hoodie">
+                <div class="product-info">
+                    <h3>Ideal Hoodie</h3>
+                    <p id="product-price">$99.00</p>
+                </div>
+            </div>
+
+            <a id="btn-buy" href="#" class="btn-primary">Купить сейчас</a>
+            <button id="btn-retry" class="btn-secondary">Попробовать еще раз</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

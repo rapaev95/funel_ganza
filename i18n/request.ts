@@ -1,0 +1,31 @@
+import { getRequestConfig } from 'next-intl/server'
+import { routing } from './routing'
+
+// Import all messages at the top level (not dynamically)
+import ruMessages from '../messages/ru.json'
+import kkMessages from '../messages/kk.json'
+import enMessages from '../messages/en.json'
+import ptBRMessages from '../messages/pt-BR.json'
+
+const messages = {
+  'ru': ruMessages,
+  'kk': kkMessages,
+  'en': enMessages,
+  'pt-BR': ptBRMessages,
+}
+
+export default getRequestConfig(async ({ requestLocale }) => {
+  // This typically corresponds to the `[locale]` segment
+  let locale = await requestLocale
+
+  // Ensure that a valid locale is used
+  if (!locale || !routing.locales.includes(locale as any)) {
+    locale = routing.defaultLocale
+  }
+
+  return {
+    locale,
+    messages: messages[locale as keyof typeof messages] || messages['ru']
+  }
+})
+

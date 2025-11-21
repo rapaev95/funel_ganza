@@ -70,11 +70,20 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error('Error in analytics route:', error)
+    
+    const isDev = process.env.NODE_ENV === 'development'
+    
     // Не возвращаем ошибку клиенту, чтобы не ломать основной flow
     return NextResponse.json({
       success: false,
       message: 'Internal server error',
-    })
+      // Детали ошибки только в development
+      ...(isDev && {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        details: error instanceof Error ? error.toString() : String(error),
+      })
+    }, { status: 500 })
   }
 }
 

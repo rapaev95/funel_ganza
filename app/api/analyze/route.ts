@@ -75,7 +75,9 @@ export async function POST(request: NextRequest) {
     })
 
     if (!n8nResponse.ok) {
-      throw new Error('Failed to send to n8n')
+      const errorText = await n8nResponse.text()
+      const statusText = n8nResponse.statusText
+      throw new Error(`Failed to send to n8n: ${n8nResponse.status} ${statusText}. Response: ${errorText}`)
     }
 
     const n8nData = await n8nResponse.json()
@@ -88,8 +90,20 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error('Error in analyze route:', error)
+    
+    // В development режиме возвращаем детальную ошибку
+    const isDev = process.env.NODE_ENV === 'development'
+    
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { 
+        error: 'Internal server error',
+        // Детали ошибки только в development
+        ...(isDev && {
+          message: error instanceof Error ? error.message : 'Unknown error',
+          stack: error instanceof Error ? error.stack : undefined,
+          details: error instanceof Error ? error.toString() : String(error),
+        })
+      },
       { status: 500 }
     )
   }

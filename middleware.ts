@@ -4,8 +4,10 @@ import { routing } from './i18n/routing'
 // Создаем middleware для обработки локалей
 const intlMiddleware = createMiddleware(routing)
 
+// Экспортируем middleware
 export default intlMiddleware
 
+// Конфигурация matcher для middleware
 export const config = {
   // Обрабатываем все пути, кроме статических файлов и API routes
   matcher: [

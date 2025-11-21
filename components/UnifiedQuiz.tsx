@@ -122,7 +122,7 @@ export function UnifiedQuiz({ onComplete }: UnifiedQuizProps) {
 
   const currentStepData = stepData[currentStep - 1]
   const photosCompleted = selectedFiles.filter(f => f !== null && f !== undefined).length === 2
-  const questionsCompleted = age && gender
+  const questionsCompleted = !!(age && gender)
 
   return (
     <div className="quiz-photo-upload">

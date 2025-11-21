@@ -35,16 +35,6 @@ export function LanguageSwitcher() {
   }, [])
 
   const handleLanguageChange = (newLocale: string) => {
-    // Сохраняем выбор языка в cookie через document.cookie
-    if (typeof document !== 'undefined') {
-      document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`
-    }
-    
-    // Сохраняем также в localStorage для быстрого доступа
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('preferred-language', newLocale)
-    }
-    
     // Получаем реальный путь из window.location.pathname
     if (typeof window === 'undefined') {
       setIsOpen(false)

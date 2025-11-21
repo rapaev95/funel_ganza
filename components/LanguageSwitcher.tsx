@@ -7,7 +7,7 @@ import { routing } from '@/i18n/routing'
 
 const languages = [
   { code: 'ru', name: 'Русский', flag: '🇷🇺' },
-  { code: 'kk', name: 'Қазақша', flag: '🇰🇿' },
+  { code: 'kz', name: 'Қазақша', flag: '🇰🇿' },
   { code: 'en', name: 'English', flag: '🇺🇸' },
   { code: 'pt-BR', name: 'Português', flag: '🇧🇷' },
 ]

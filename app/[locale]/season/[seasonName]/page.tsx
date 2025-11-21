@@ -26,19 +26,19 @@ const seasonData: Record<string, {
   winter: {
     title: {
       ru: 'Зима',
-      kk: 'Қыс',
+      kz: 'Қыс',
       en: 'Winter',
       'pt-BR': 'Inverno'
     },
     subtitle: {
       ru: 'Контрастная, яркая, холодная',
-      kk: 'Контрастты, жарқын, суық',
+      kz: 'Контрастты, жарқын, суық',
       en: 'Contrasting, bright, cool',
       'pt-BR': 'Contrastante, brilhante, frio'
     },
     description: {
       ru: 'Зимний цветотип отличается высокой контрастностью между кожей, волосами и глазами. Вам идеально подходят чистые, насыщенные и холодные оттенки.',
-      kk: 'Қыс түс типі тері, шаш және көз арасындағы жоғары контрастпен ерекшеленеді. Сізге таза, қанық және суық түстер сәйкес келеді.',
+      kz: 'Қыс түс типі тері, шаш және көз арасындағы жоғары контрастпен ерекшеленеді. Сізге таза, қанық және суық түстер сәйкес келеді.',
       en: 'Winter color type is characterized by high contrast between skin, hair and eyes. Pure, saturated and cool shades are perfect for you.',
       'pt-BR': 'O tipo de cor invernal é caracterizado por alto contraste entre pele, cabelo e olhos. Tons puros, saturados e frios são perfeitos para você.'
     },
@@ -118,19 +118,19 @@ const seasonData: Record<string, {
   spring: {
     title: {
       ru: 'Весна',
-      kk: 'Көктем',
+      kz: 'Көктем',
       en: 'Spring',
       'pt-BR': 'Primavera'
     },
     subtitle: {
       ru: 'Светлая, теплая, яркая',
-      kk: 'Жарық, жылы, жарқын',
+      kz: 'Жарық, жылы, жарқын',
       en: 'Light, warm, bright',
       'pt-BR': 'Claro, quente, brilhante'
     },
     description: {
       ru: 'Весенний цветотип характеризуется светлой кожей с теплым подтоном, светлыми волосами и яркими глазами. Вам подходят свежие, теплые и яркие оттенки.',
-      kk: 'Көктем түс типі жылы реңкті жеңіл тері, жеңіл шаш және жарқын көздермен сипатталады. Сізге жаңа, жылы және жарқын түстер сәйкес келеді.',
+      kz: 'Көктем түс типі жылы реңкті жеңіл тері, жеңіл шаш және жарқын көздермен сипатталады. Сізге жаңа, жылы және жарқын түстер сәйкес келеді.',
       en: 'Spring color type is characterized by light skin with warm undertone, light hair and bright eyes. Fresh, warm and bright shades suit you.',
       'pt-BR': 'O tipo de cor primaveril é caracterizado por pele clara com subtom quente, cabelo claro e olhos brilhantes. Tons frescos, quentes e brilhantes combinam com você.'
     },
@@ -209,19 +209,19 @@ const seasonData: Record<string, {
   summer: {
     title: {
       ru: 'Лето',
-      kk: 'Жаз',
+      kz: 'Жаз',
       en: 'Summer',
       'pt-BR': 'Verão'
     },
     subtitle: {
       ru: 'Мягкая, прохладная, приглушенная',
-      kk: 'Жұмсақ, салқын, басылған',
+      kz: 'Жұмсақ, салқын, басылған',
       en: 'Soft, cool, muted',
       'pt-BR': 'Suave, frio, suave'
     },
     description: {
       ru: 'Летний цветотип отличается мягкой, прохладной кожей, светлыми или пепельными волосами и светлыми глазами. Вам подходят приглушенные, прохладные и пастельные оттенки.',
-      kk: 'Жаз түс типі жұмсақ, салқын тері, жеңіл немесе күлгін шаш және жеңіл көздермен ерекшеленеді. Сізге басылған, салқын және пастельді түстер сәйкес келеді.',
+      kz: 'Жаз түс типі жұмсақ, салқын тері, жеңіл немесе күлгін шаш және жеңіл көздермен ерекшеленеді. Сізге басылған, салқын және пастельді түстер сәйкес келеді.',
       en: 'Summer color type is distinguished by soft, cool skin, light or ashy hair and light eyes. Muted, cool and pastel shades suit you.',
       'pt-BR': 'O tipo de cor de verão é distinguido por pele suave e fria, cabelo claro ou acinzentado e olhos claros. Tons suaves, frios e pastéis combinam com você.'
     },
@@ -300,19 +300,19 @@ const seasonData: Record<string, {
   autumn: {
     title: {
       ru: 'Осень',
-      kk: 'Күз',
+      kz: 'Күз',
       en: 'Autumn',
       'pt-BR': 'Outono'
     },
     subtitle: {
       ru: 'Теплая, насыщенная, землистая',
-      kk: 'Жылы, қанық, топырақты',
+      kz: 'Жылы, қанық, топырақты',
       en: 'Warm, saturated, earthy',
       'pt-BR': 'Quente, saturado, terroso'
     },
     description: {
       ru: 'Осенний цветотип характеризуется теплой кожей с золотистым подтоном, рыжими или каштановыми волосами и теплыми глазами. Вам подходят насыщенные, теплые и землистые оттенки.',
-      kk: 'Күз түс типі алтын реңкті жылы тері, қызыл немесе қоңыр шаш және жылы көздермен сипатталады. Сізге қанық, жылы және топырақты түстер сәйкес келеді.',
+      kz: 'Күз түс типі алтын реңкті жылы тері, қызыл немесе қоңыр шаш және жылы көздермен сипатталады. Сізге қанық, жылы және топырақты түстер сәйкес келеді.',
       en: 'Autumn color type is characterized by warm skin with golden undertone, red or chestnut hair and warm eyes. Saturated, warm and earthy shades suit you.',
       'pt-BR': 'O tipo de cor outonal é caracterizado por pele quente com subtom dourado, cabelo ruivo ou castanho e olhos quentes. Tons saturados, quentes e terrosos combinam com você.'
     },
@@ -354,7 +354,7 @@ export default function SeasonPage() {
   const params = useParams()
   const router = useRouter()
   const t = useTranslations()
-  const locale = useLocale() as 'ru' | 'kk' | 'en' | 'pt-BR'
+  const locale = useLocale() as 'ru' | 'kz' | 'en' | 'pt-BR'
   const seasonName = (params.seasonName as string)?.toLowerCase()
   const season = seasonData[seasonName]
 
@@ -364,7 +364,7 @@ export default function SeasonPage() {
         <div className="screen">
           <h1>Season not found</h1>
           <button onClick={() => router.push(`/${locale}`)} className="btn-primary">
-            {locale === 'ru' ? 'На главную' : locale === 'kk' ? 'Басты бетке' : locale === 'en' ? 'Home' : 'Início'}
+            {locale === 'ru' ? 'На главную' : locale === 'kz' ? 'Басты бетке' : locale === 'en' ? 'Home' : 'Início'}
           </button>
         </div>
       </div>
@@ -388,7 +388,7 @@ export default function SeasonPage() {
         <div className="season-header">
           <div className="brand-name">{t('common.brand')}</div>
           <h1 className="season-title">
-            {locale === 'ru' ? 'Цветотип' : locale === 'kk' ? 'Түс типі' : locale === 'en' ? 'Color type' : 'Tipo de cor'}{' '}
+            {locale === 'ru' ? 'Цветотип' : locale === 'kz' ? 'Түс типі' : locale === 'en' ? 'Color type' : 'Tipo de cor'}{' '}
             <span className="highlight">{season.title[locale]}</span>
           </h1>
           <p className="season-subtitle">{season.subtitle[locale]}</p>
@@ -401,7 +401,7 @@ export default function SeasonPage() {
         <div className="season-description">
           <h3>
             {locale === 'ru' ? 'Описание цветотипа' : 
-             locale === 'kk' ? 'Түс типінің сипаттамасы' : 
+             locale === 'kz' ? 'Түс типінің сипаттамасы' : 
              locale === 'en' ? 'Color type description' : 
              'Descrição do tipo de cor'}
           </h3>
@@ -411,7 +411,7 @@ export default function SeasonPage() {
         <div className="color-section">
           <h3>
             {locale === 'ru' ? '✅ Ваши идеальные цвета' : 
-             locale === 'kk' ? '✅ Сіздің мінсіз түстеріңіз' : 
+             locale === 'kz' ? '✅ Сіздің мінсіз түстеріңіз' : 
              locale === 'en' ? '✅ Your ideal colors' : 
              '✅ Suas cores ideais'}
           </h3>
@@ -434,7 +434,7 @@ export default function SeasonPage() {
         <div className="color-section avoid">
           <h3>
             {locale === 'ru' ? '❌ Избегайте этих цветов' : 
-             locale === 'kk' ? '❌ Бұл түстерден аулақ болыңыз' : 
+             locale === 'kz' ? '❌ Бұл түстерден аулақ болыңыз' : 
              locale === 'en' ? '❌ Avoid these colors' : 
              '❌ Evite essas cores'}
           </h3>
@@ -451,13 +451,13 @@ export default function SeasonPage() {
         <div className="products-section">
           <h2>
             {locale === 'ru' ? 'Рекомендуемые худи для вас' : 
-             locale === 'kk' ? 'Сізге ұсынылатын худи' : 
+             locale === 'kz' ? 'Сізге ұсынылатын худи' : 
              locale === 'en' ? 'Recommended hoodies for you' : 
              'Moletons recomendados para você'}
           </h2>
           <p className="products-subtitle">
             {locale === 'ru' ? 'Подобрано специально под ваш цветотип' : 
-             locale === 'kk' ? 'Сіздің түс типіңізге арнайы таңдалған' : 
+             locale === 'kz' ? 'Сіздің түс типіңізге арнайы таңдалған' : 
              locale === 'en' ? 'Selected specifically for your color type' : 
              'Selecionado especificamente para seu tipo de cor'}
           </p>
@@ -476,7 +476,7 @@ export default function SeasonPage() {
                 <div className="product-info-wb">
                   <h4>{product.name[locale]}</h4>
                   <p className="product-article">
-                    {locale === 'ru' ? 'Артикул' : locale === 'kk' ? 'Артикул' : locale === 'en' ? 'Article' : 'Artigo'}: {product.article}
+                    {locale === 'ru' ? 'Артикул' : locale === 'kz' ? 'Артикул' : locale === 'en' ? 'Article' : 'Artigo'}: {product.article}
                   </p>
                   <div className="product-price-block">
                     <span className="product-price">{product.price}</span>
@@ -490,7 +490,7 @@ export default function SeasonPage() {
                     onClick={() => handleBuyClick(product.name[locale], product.price)}
                   >
                     {locale === 'ru' ? 'Купить на WB' : 
-                     locale === 'kk' ? 'WB-де сатып алу' : 
+                     locale === 'kz' ? 'WB-де сатып алу' : 
                      locale === 'en' ? 'Buy on WB' : 
                      'Comprar no WB'}
                   </a>
@@ -502,7 +502,7 @@ export default function SeasonPage() {
 
         <button onClick={() => router.back()} className="btn-back">
           {locale === 'ru' ? '← Назад к результатам' : 
-           locale === 'kk' ? '← Нәтижелерге оралу' : 
+           locale === 'kz' ? '← Нәтижелерге оралу' : 
            locale === 'en' ? '← Back to results' : 
            '← Voltar aos resultados'}
         </button>

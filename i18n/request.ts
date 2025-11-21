@@ -3,13 +3,13 @@ import { routing } from './routing'
 
 // Import all messages at the top level (not dynamically)
 import ruMessages from '../messages/ru.json'
-import kkMessages from '../messages/kk.json'
+import kzMessages from '../messages/kz.json'
 import enMessages from '../messages/en.json'
 import ptBRMessages from '../messages/pt-BR.json'
 
 const messages = {
   'ru': ruMessages,
-  'kk': kkMessages,
+  'kz': kzMessages,
   'en': enMessages,
   'pt-BR': ptBRMessages,
 }

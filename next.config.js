@@ -8,15 +8,6 @@ const nextConfig = {
     domains: ['images.unsplash.com'],
     unoptimized: true,
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/ru',
-        permanent: false,
-      },
-    ]
-  },
 }
 
 module.exports = withNextIntl(nextConfig)

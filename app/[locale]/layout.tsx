@@ -1,25 +1,12 @@
 import { NextIntlClientProvider } from 'next-intl'
+import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
+import { routing } from '@/i18n/routing'
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import Script from 'next/script'
 import '../globals.css'
 import { FacebookPixel } from '@/components/FacebookPixel'
-
-// Import messages directly
-import ruMessages from '@/messages/ru.json'
-import kkMessages from '@/messages/kk.json'
-import enMessages from '@/messages/en.json'
-import ptBRMessages from '@/messages/pt-BR.json'
-
-const messages = {
-  'ru': ruMessages,
-  'kk': kkMessages,
-  'en': enMessages,
-  'pt-BR': ptBRMessages,
-}
-
-const locales = ['ru', 'kk', 'en', 'pt-BR'] as const
 
 const inter = Inter({ 
   subsets: ['latin', 'cyrillic'],
@@ -38,7 +25,7 @@ export const metadata: Metadata = {
 }
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }))
+  return routing.locales.map((locale) => ({ locale }))
 }
 
 export default async function LocaleLayout({
@@ -51,12 +38,13 @@ export default async function LocaleLayout({
   const { locale } = await params
   
   // Ensure that the incoming `locale` is valid
-  if (!locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as any)) {
     notFound()
   }
 
-  // Get messages for this locale
-  const localeMessages = messages[locale as keyof typeof messages] || messages['ru']
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages()
   const pixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID || '989549929881045'
 
   return (
@@ -97,7 +85,7 @@ export default async function LocaleLayout({
         )}
       </head>
       <body className={`${inter.variable} ${playfair.variable}`}>
-        <NextIntlClientProvider messages={localeMessages} locale={locale}>
+        <NextIntlClientProvider messages={messages}>
           {children}
           <FacebookPixel />
         </NextIntlClientProvider>

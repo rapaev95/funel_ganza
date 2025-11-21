@@ -4,15 +4,10 @@ import { routing } from './i18n/routing';
 export default createMiddleware(routing);
 
 export const config = {
-  // Match only internationalized pathnames
-  // Skip API routes, Next.js internals, and all static files
+  // Match ONLY page routes - explicit and minimal
   matcher: [
-    // Match root and locale paths
-    '/',
-    '/(ru|kk|en|pt-BR)/:path*',
-    
-    // Skip all files with extensions and special paths
-    '/((?!api|_next|_vercel|.*\\..*).*)'
+    '/',                                    // Root path
+    '/(ru|kk|en|pt-BR)(/.*)?'              // Locale paths with optional sub-paths
   ]
 };
 

@@ -1,0 +1,140 @@
+{
+  "common": {
+    "brand": "VIBELOOK",
+    "loading": "Carregando..."
+  },
+  "landing": {
+    "title": "Seu estilista AI escolherá looks para o seu tipo de cor.",
+    "subtitle": "Envie 2-3 fotos e receba uma seleção pessoal em 30 segundos",
+    "ctaButton": "Escolher looks",
+    "feature1": {
+      "icon": "🎨",
+      "title": "Tipo de cor",
+      "desc": "obtenha sua paleta"
+    },
+    "feature2": {
+      "icon": "🧩",
+      "title": "Arquétipo",
+      "desc": "descubra seu código de estilo"
+    },
+    "feature3": {
+      "icon": "🧍‍♀️",
+      "title": "Silhueta",
+      "desc": "o que realmente combina com seu corpo"
+    }
+  },
+  "home": {
+    "title": "Descubra sua cor perfeita",
+    "subtitle": "Envie uma foto e a IA escolherá um moletom que destaque sua aparência.",
+    "benefit1Title": "Em 30 segundos",
+    "benefit1Desc": "Análise instantânea",
+    "benefit2Title": "100% de precisão",
+    "benefit2Desc": "Análise de cor por IA",
+    "benefit3Title": "Estilo pessoal",
+    "benefit3Desc": "Apenas para você",
+    "analyzeButton": "Analisar",
+    "retryButton": "Tentar novamente"
+  },
+  "instructions": {
+    "title": "📋 Requisitos da foto",
+    "goodLighting": "✅ Boa iluminação",
+    "goodLightingDesc": "Luz natural, rosto claramente visível",
+    "noFilters": "✅ Sem filtros",
+    "noFiltersDesc": "Foto original, sem processamento",
+    "clearPhoto": "✅ Foto nítida",
+    "clearPhotoDesc": "Rosto em foco, não borrado",
+    "neutralBackground": "✅ Fundo neutro",
+    "neutralBackgroundDesc": "Fundo sólido, sem elementos que distraiam",
+    "noMakeup": "✅ Sem maquiagem (preferível)",
+    "noMakeupDesc": "Para análise de cor mais precisa",
+    "directLook": "✅ Olhar direto",
+    "directLookDesc": "Olhe diretamente para a câmera",
+    "selfie": "📸 Selfie",
+    "selfieDesc": "Rosto em close, boa iluminação",
+    "fullBody": "👤 Corpo inteiro",
+    "fullBodyDesc": "Foto do corpo inteiro para análise de silhueta"
+  },
+  "quiz": {
+    "questions": {
+      "title": "Conte-nos sobre você",
+      "subtitle": "Isso nos ajudará a escolher o guarda-roupa perfeito",
+      "age": "Idade",
+      "gender": "Gênero",
+      "genderMale": "Masculino",
+      "genderFemale": "Feminino",
+      "continue": "Analisar"
+    },
+    "step1Title": "Passo 1: Sobre você",
+    "step1Desc": "Conte-nos sobre você para recomendações pessoais",
+    "step2Title": "Passo 2: Selfie",
+    "step2Desc": "Tire uma selfie com boa iluminação",
+    "step3Title": "Passo 3: Corpo inteiro",
+    "step3Desc": "Foto do corpo inteiro para melhor análise",
+    "uploadHint": "Clique para selecionar foto",
+    "continueButton": "Continuar → Enviar foto do corpo inteiro",
+    "photosCompleted": "Todas as fotos enviadas!",
+    "removePhoto": "Remover foto"
+  },
+  "budget": {
+    "question": "Qual estratégia de guarda-roupa está mais próxima de você?",
+    "quantity": "Looks",
+    "duration": "Vida útil",
+    "zone1": {
+      "short": "Mais opções",
+      "title": "Mais opções",
+      "quantity": "8-12",
+      "duration": "1 temporada",
+      "description": "Máxima variedade para experimentar diferentes estilos. Mais combinações para experimentos."
+    },
+    "zone2": {
+      "short": "Cápsula",
+      "title": "Guarda-roupa cápsula",
+      "quantity": "5-7",
+      "duration": "2-3 temporadas",
+      "description": "Tudo combina com tudo. Equilíbrio ideal entre quantidade e qualidade."
+    },
+    "zone3": {
+      "short": "Premium",
+      "title": "Coleção premium",
+      "quantity": "2-4",
+      "duration": "3+ temporadas",
+      "description": "Itens exclusivos. Cada um é uma obra de arte. Menos combinações, mas cada uma é bem pensada."
+    }
+  },
+  "loader": {
+    "analyzing": "IA está analisando seu tipo de cor..."
+  },
+  "result": {
+    "yourColorType": "Seu tipo de cor:",
+    "yourPalette": "Sua paleta",
+    "yourIdealLook": "Seu visual ideal",
+    "personalRecommendation": "✨ Recomendação pessoal",
+    "buyNow": "Comprar agora",
+    "viewAllColors": "Ver todas as cores de {season}",
+    "viewAllColorsWinter": "Ver todas as cores de Inverno",
+    "viewAllColorsSpring": "Ver todas as cores de Primavera",
+    "viewAllColorsSummer": "Ver todas as cores de Verão",
+    "viewAllColorsAutumn": "Ver todas as cores de Outono"
+  },
+  "errors": {
+    "uploadBothPhotos": "Por favor, envie ambas as fotos para análise",
+    "analysisFailed": "Erro na análise. Por favor, tente novamente mais tarde."
+  },
+  "language": {
+    "select": "Selecionar idioma",
+    "russian": "Русский",
+    "kazakh": "Қазақша",
+    "english": "English",
+    "portuguese": "Português"
+  },
+  "instagram": {
+    "location": "Moscou, Rússia",
+    "likes": "curtidas",
+    "caption": "Obrigado ao app vibelook pela seleção perfeita! ✨ Cada detalhe foi pensado especialmente para você. #vibelook #EstiloPessoal",
+    "comment1": "Uau, que look! Totalmente apaixonada! 🔥🔥🔥",
+    "comment2": "Amei esse novo look! Você está incrível! 💜",
+    "comment3": "Todo mundo está impressionado com seu novo estilo! Simplesmente incrível! ✨",
+    "timeAgo": "2 horas atrás"
+  }
+}
+

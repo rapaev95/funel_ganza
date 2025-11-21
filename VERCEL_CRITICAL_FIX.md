@@ -1,6 +1,6 @@
 # 🔧 КРИТИЧЕСКИЕ ИСПРАВЛЕНИЯ для Vercel
 
-**Последнее обновление**: 2025-11-21
+**Последнее обновление**: 2025-11-21 (финальная версия - custom middleware)
 
 ## ❌ Проблема: MIDDLEWARE_INVOCATION_FAILED (500 Error)
 
@@ -151,20 +151,64 @@ export const routing = defineRouting({
 })
 ```
 
-### 4. `middleware.ts` - Упрощен
+### 4. `middleware.ts` - ПОЛНАЯ ЗАМЕНА на custom middleware
 
-**Было:**
+**Было (next-intl):**
 ```typescript
+import createMiddleware from 'next-intl/middleware'
+import { routing } from './i18n/routing'
+
 export default createMiddleware({
   ...routing,
-  localeDetection: false  // ❌ Лишняя опция
+  localeDetection: false  // ❌ Вызывало MIDDLEWARE_INVOCATION_FAILED
 })
 ```
 
-**Стало:**
+**Стало (custom, без next-intl):**
 ```typescript
-export default createMiddleware(routing)  // ✅ Только routing
+import { NextRequest, NextResponse } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+  
+  // Skip API routes, static files, and Next.js internal routes
+  if (
+    pathname.startsWith('/api') ||
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/_vercel') ||
+    pathname.includes('.')
+  ) {
+    return NextResponse.next()
+  }
+
+  // Define supported locales
+  const locales = ['ru', 'kk', 'en', 'pt-BR']
+  const defaultLocale = 'ru'
+
+  // Check if pathname already has a locale
+  const pathnameHasLocale = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  )
+
+  if (pathnameHasLocale) {
+    return NextResponse.next()
+  }
+
+  // Redirect to default locale
+  const newUrl = new URL(`/${defaultLocale}${pathname}`, request.url)
+  return NextResponse.redirect(newUrl)
+}
+
+export const config = {
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
+}
 ```
+
+**Почему это работает:**
+- ✅ Нет зависимости от next-intl middleware
+- ✅ Простой редирект без сложной логики
+- ✅ Совместим с Edge Runtime
+- ✅ Не использует cookies, getRequestConfig, или динамические импорты
 
 ### 5. `components/LanguageSwitcher.tsx` - Убрана логика с cookies
 

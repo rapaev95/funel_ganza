@@ -1,15 +1,19 @@
 # 🔧 КРИТИЧЕСКИЕ ИСПРАВЛЕНИЯ для Vercel
 
+**Последнее обновление**: 2025-11-21
+
 ## ❌ Проблема: MIDDLEWARE_INVOCATION_FAILED (500 Error)
 
 ### Причины:
 1. **cookies() в middleware context** - запрещено на Vercel Edge Runtime
-2. **Facebook Pixel не инициализирован в head**
-3. **Лишняя логика с cookies в LanguageSwitcher**
+2. **Динамический импорт messages** - проблемы с Edge Runtime
+3. **localePrefix: 'as-needed'** - может вызывать конфликты
+4. **localeDetection: false** - лишняя опция
+5. **Facebook Pixel не инициализирован в head**
 
 ---
 
-## ✅ ИСПРАВЛЕНО
+## ✅ ИСПРАВЛЕНО (Финальная версия)
 
 ### 1. `i18n/request.ts` - Удалена логика с cookies()
 
@@ -37,7 +41,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
 **Стало (работает):**
 ```typescript
-// ✅ Без cookies() - next-intl сам определяет locale из URL
+// ✅ Статический импорт для каждой локали
 export default getRequestConfig(async ({ requestLocale }) => {
   let locale = await requestLocale
 
@@ -46,9 +50,25 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale = routing.defaultLocale
   }
 
+  // Import messages statically to avoid issues with Edge Runtime
+  const messages = await (async () => {
+    switch (locale) {
+      case 'ru':
+        return (await import('../messages/ru.json')).default
+      case 'kk':
+        return (await import('../messages/kk.json')).default
+      case 'en':
+        return (await import('../messages/en.json')).default
+      case 'pt-BR':
+        return (await import('../messages/pt-BR.json')).default
+      default:
+        return (await import('../messages/ru.json')).default
+    }
+  })()
+
   return {
     locale,
-    messages: (await import(`../messages/${locale}.json`)).default
+    messages
   }
 })
 ```
@@ -111,7 +131,42 @@ export default async function LocaleLayout({ children, params }) {
 }
 ```
 
-### 3. `components/LanguageSwitcher.tsx` - Убрана логика с cookies
+### 3. `i18n/routing.ts` - Изменен localePrefix
+
+**Было:**
+```typescript
+export const routing = defineRouting({
+  locales: ['ru', 'kk', 'en', 'pt-BR'],
+  defaultLocale: 'ru',
+  localePrefix: 'as-needed'  // ❌ Может вызывать проблемы
+})
+```
+
+**Стало:**
+```typescript
+export const routing = defineRouting({
+  locales: ['ru', 'kk', 'en', 'pt-BR'],
+  defaultLocale: 'ru',
+  localePrefix: 'always'  // ✅ Всегда использовать префикс
+})
+```
+
+### 4. `middleware.ts` - Упрощен
+
+**Было:**
+```typescript
+export default createMiddleware({
+  ...routing,
+  localeDetection: false  // ❌ Лишняя опция
+})
+```
+
+**Стало:**
+```typescript
+export default createMiddleware(routing)  // ✅ Только routing
+```
+
+### 5. `components/LanguageSwitcher.tsx` - Убрана логика с cookies
 
 **Было:**
 ```typescript

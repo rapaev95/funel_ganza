@@ -44,7 +44,7 @@ export default async function LocaleLayout({
 
   // Providing all messages to the client
   // side is the easiest way to get started
-  const messages = await getMessages()
+  const messages = await getMessages({ locale })
   const pixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID || '989549929881045'
 
   return (

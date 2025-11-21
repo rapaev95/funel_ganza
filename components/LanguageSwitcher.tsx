@@ -12,14 +12,35 @@ const languages = [
   { code: 'pt-BR', name: 'Português', flag: '🇧🇷' },
 ]
 
+// Функция для получения локали из URL
+function getLocaleFromPath(path: string): string {
+  const sortedLocales = [...routing.locales].sort((a, b) => b.length - a.length)
+  for (const loc of sortedLocales) {
+    if (path.startsWith(`/${loc}/`) || path === `/${loc}`) {
+      return loc
+    }
+  }
+  return routing.defaultLocale
+}
+
 export function LanguageSwitcher() {
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const [currentLocale, setCurrentLocale] = useState<string>(locale)
 
-  const currentLanguage = languages.find(lang => lang.code === locale) || languages[0]
+  // Обновляем локаль из URL при изменении pathname
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname
+      const detectedLocale = getLocaleFromPath(path)
+      setCurrentLocale(detectedLocale)
+    }
+  }, [pathname, locale])
+
+  const currentLanguage = languages.find(lang => lang.code === currentLocale) || languages[0]
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -80,19 +101,10 @@ export function LanguageSwitcher() {
     }
     
     // Формируем новый путь с новой локалью
-    let newPath: string
-    if (newLocale === routing.defaultLocale) {
-      // Для дефолтного языка (ru) не добавляем префикс
-      newPath = pathWithoutLocale
-    } else {
-      // Для других языков добавляем префикс локали
-      // Убеждаемся, что путь не начинается уже с этой локали
-      if (pathWithoutLocale.startsWith(`/${newLocale}/`) || pathWithoutLocale === `/${newLocale}`) {
-        // Если путь уже содержит новую локаль, убираем её и добавляем заново
-        pathWithoutLocale = removeLocaleFromPath(pathWithoutLocale)
-      }
-      newPath = pathWithoutLocale === '/' ? `/${newLocale}` : `/${newLocale}${pathWithoutLocale}`
-    }
+    // ВСЕГДА добавляем префикс локали (localePrefix: 'always')
+    const newPath = pathWithoutLocale === '/' 
+      ? `/${newLocale}` 
+      : `/${newLocale}${pathWithoutLocale}`
     
     // Используем window.location для надежного переключения
     window.location.href = newPath
@@ -115,12 +127,12 @@ export function LanguageSwitcher() {
           {languages.map((lang) => (
             <button
               key={lang.code}
-              className={`language-option ${locale === lang.code ? 'active' : ''}`}
+              className={`language-option ${currentLocale === lang.code ? 'active' : ''}`}
               onClick={() => handleLanguageChange(lang.code)}
               aria-label={`Select ${lang.name}`}
             >
               <span className="language-flag">{lang.flag}</span>
-              {locale === lang.code && <span className="language-check">✓</span>}
+              {currentLocale === lang.code && <span className="language-check">✓</span>}
             </button>
           ))}
         </div>

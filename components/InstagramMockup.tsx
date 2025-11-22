@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/translations'
 
 export function InstagramMockup() {
   const t = useTranslations('instagram')
@@ -133,4 +133,3 @@ export function InstagramMockup() {
     </div>
   )
 }
-

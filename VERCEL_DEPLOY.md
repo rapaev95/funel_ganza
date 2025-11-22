@@ -148,3 +148,4 @@ Telegram mini app доступен через:
 https://t.me/vibelook_bot/webapp
 ```
 
+

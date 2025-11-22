@@ -135,3 +135,4 @@ export default async function LocaleLayout({
 
 Это правильная конфигурация по документации next-intl!
 
+

@@ -60,4 +60,3 @@ export async function sendAnalyticsEvent(
     console.error('Error sending analytics event:', error)
   }
 }
-

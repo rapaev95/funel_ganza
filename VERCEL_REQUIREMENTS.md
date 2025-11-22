@@ -327,3 +327,4 @@ NEXT_PUBLIC_SITE_URL=https://your-project-name.vercel.app
 
 Проект полностью готов к деплою на Vercel.
 
+

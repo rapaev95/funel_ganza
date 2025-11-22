@@ -92,8 +92,9 @@ body {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #ffffff;
-  margin-bottom: 8px;
+  margin: 0 0 20px 0;
   text-align: center;
+  width: 100%;
   background: linear-gradient(90deg,
     #ffffff 0%,
     #e0e0e0 25%,
@@ -1015,6 +1016,8 @@ h2 {
 /* Landing Page Styles */
 .landing-page {
   min-height: 100vh;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
 
 .landing-hero {
@@ -1022,8 +1025,9 @@ h2 {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin: 12px 0;
-  gap: 4px;
+  margin: 20px 0;
+  gap: 16px;
+  width: 100%;
 }
 
 .landing-image-wrapper {

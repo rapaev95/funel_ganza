@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
 import { GeoAvailability } from '@/types/traffic'
 
 interface GeoAvailabilityMapProps {
@@ -14,208 +15,170 @@ const CHANNEL_ICONS: Record<string, string> = {
   yandex: '🔍'
 }
 
-// Координаты центров стран для маркеров (x, y в процентах)
-const COUNTRY_COORDINATES: Record<string, { x: number; y: number; name: string }> = {
-  'Россия': { x: 50, y: 35, name: 'Россия' },
-  'Казахстан': { x: 55, y: 50, name: 'Казахстан' },
-  'Беларусь': { x: 35, y: 30, name: 'Беларусь' },
-  'Армения': { x: 48, y: 65, name: 'Армения' },
-  'Узбекистан': { x: 58, y: 58, name: 'Узбекистан' },
-  'Киргизия': { x: 62, y: 55, name: 'Киргизия' },
-  'Грузия': { x: 46, y: 62, name: 'Грузия' },
-  'Сербия': { x: 32, y: 42, name: 'Сербия' }
+// Координаты стран [longitude, latitude] для маркеров
+const COUNTRY_COORDINATES: Record<string, { coords: [number, number], name: string }> = {
+  'Россия': { coords: [100, 60], name: 'Россия' },
+  'Казахстан': { coords: [66, 48], name: 'Казахстан' },
+  'Беларусь': { coords: [28, 53], name: 'Беларусь' },
+  'Армения': { coords: [44.5, 40.2], name: 'Армения' },
+  'Узбекистан': { coords: [64, 41], name: 'Узбекистан' },
+  'Киргизия': { coords: [74, 41.5], name: 'Киргизия' },
+  'Грузия': { coords: [43.5, 42], name: 'Грузия' },
+  'Сербия': { coords: [21, 44], name: 'Сербия' }
 }
 
-// Упрощенная политическая карта России и соседних стран
+// Маппинг названий стран для поиска в топо-данных
+const COUNTRY_NAME_MAP: Record<string, string[]> = {
+  'Россия': ['Russia', 'Russian Federation'],
+  'Казахстан': ['Kazakhstan'],
+  'Беларусь': ['Belarus', 'Belorussia'],
+  'Армения': ['Armenia'],
+  'Узбекистан': ['Uzbekistan'],
+  'Киргизия': ['Kyrgyzstan', 'Kyrgyz Republic'],
+  'Грузия': ['Georgia'],
+  'Сербия': ['Serbia']
+}
+
+// Топо-данные мира (включают все страны)
+const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
+
 const WorldMapSVG = ({ availableCountries, selectedChannel }: { availableCountries: string[], selectedChannel: string | null }) => {
-  return (
-    <svg
-      viewBox="0 0 1200 800"
-      style={{
-        width: '100%',
-        height: 'auto',
-        maxHeight: '600px',
-        background: '#ffffff',
-        borderRadius: 'var(--radius)',
-        border: '1px solid var(--glass-border)'
-      }}
-    >
-      {/* Фон */}
-      <rect width="1200" height="800" fill="#f8f9fa" rx="8" />
-      
-      {/* Россия - основная территория */}
-      <g id="russia">
-        {/* Западная часть России */}
-        <path
-          d="M 200 150 L 450 120 L 500 140 L 520 180 L 500 220 L 480 280 L 450 320 L 400 350 L 350 360 L 300 350 L 250 320 L 200 280 L 150 240 L 120 200 L 130 160 Z"
-          fill="#e3f2fd"
-          stroke="#1976d2"
-          strokeWidth="2"
-        />
-        
-        {/* Центральная часть России */}
-        <path
-          d="M 450 120 L 700 100 L 750 130 L 780 180 L 760 240 L 720 300 L 680 340 L 630 360 L 580 370 L 520 360 L 480 320 L 450 280 L 420 240 L 400 200 L 390 160 L 400 130 Z"
-          fill="#e3f2fd"
-          stroke="#1976d2"
-          strokeWidth="2"
-        />
-        
-        {/* Восточная часть России (Сибирь) */}
-        <path
-          d="M 700 100 L 950 80 L 1000 120 L 1020 180 L 1000 240 L 960 300 L 900 340 L 840 360 L 780 370 L 720 360 L 680 320 L 650 280 L 630 240 L 620 200 L 630 160 L 660 130 Z"
-          fill="#e3f2fd"
-          stroke="#1976d2"
-          strokeWidth="2"
-        />
-        
-        {/* Южная часть России (Кавказ) */}
-        <path
-          d="M 400 350 L 500 340 L 550 360 L 580 400 L 560 440 L 520 460 L 480 450 L 450 420 L 420 380 L 400 360 Z"
-          fill="#e3f2fd"
-          stroke="#1976d2"
-          strokeWidth="2"
-        />
-      </g>
-
-      {/* Беларусь */}
-      <path
-        d="M 200 150 L 280 140 L 320 160 L 340 200 L 320 240 L 280 260 L 240 250 L 200 220 L 180 180 Z"
-        fill="#ce93d8"
-        stroke="#7b1fa2"
-        strokeWidth="1.5"
-      />
-      <text x="240" y="200" fontSize="14" fill="#4a148c" fontWeight="600" textAnchor="middle">БЕЛОРУССИЯ</text>
-
-      {/* Казахстан */}
-      <path
-        d="M 500 280 L 700 260 L 750 300 L 780 360 L 760 420 L 720 460 L 650 480 L 580 470 L 520 440 L 480 400 L 460 360 L 450 320 L 460 300 Z"
-        fill="#9c27b0"
-        stroke="#4a148c"
-        strokeWidth="1.5"
-      />
-      <text x="600" y="380" fontSize="16" fill="#ffffff" fontWeight="600" textAnchor="middle">КАЗАХСТАН</text>
-
-      {/* Узбекистан */}
-      <path
-        d="M 650 480 L 720 470 L 760 500 L 780 540 L 760 580 L 720 600 L 680 590 L 650 560 L 630 520 L 620 500 Z"
-        fill="#9e9e9e"
-        stroke="#424242"
-        strokeWidth="1.5"
-      />
-      <text x="680" y="540" fontSize="12" fill="#212121" fontWeight="600" textAnchor="middle">УЗБЕКИСТАН</text>
-
-      {/* Киргизия */}
-      <path
-        d="M 720 360 L 780 350 L 820 380 L 840 420 L 820 460 L 780 480 L 740 470 L 710 440 L 700 400 L 710 370 Z"
-        fill="#ba68c8"
-        stroke="#6a1b9a"
-        strokeWidth="1.5"
-      />
-      <text x="750" y="420" fontSize="11" fill="#4a148c" fontWeight="600" textAnchor="middle">КИРГИЗИЯ</text>
-
-      {/* Грузия */}
-      <path
-        d="M 480 450 L 520 440 L 550 460 L 560 500 L 540 530 L 500 540 L 470 520 L 450 480 L 460 460 Z"
-        fill="#7b1fa2"
-        stroke="#4a148c"
-        strokeWidth="1.5"
-      />
-      <text x="500" y="490" fontSize="11" fill="#ffffff" fontWeight="600" textAnchor="middle">ГРУЗИЯ</text>
-
-      {/* Армения */}
-      <path
-        d="M 520 500 L 550 490 L 580 510 L 590 540 L 570 560 L 540 570 L 510 560 L 490 530 L 500 510 Z"
-        fill="#7b1fa2"
-        stroke="#4a148c"
-        strokeWidth="1.5"
-      />
-      <text x="540" y="535" fontSize="10" fill="#ffffff" fontWeight="600" textAnchor="middle">АРМЕНИЯ</text>
-
-      {/* Сербия */}
-      <path
-        d="M 280 260 L 320 250 L 350 270 L 360 300 L 340 330 L 300 340 L 270 320 L 250 290 L 260 270 Z"
-        fill="#9c27b0"
-        stroke="#4a148c"
-        strokeWidth="1.5"
-      />
-      <text x="300" y="300" fontSize="11" fill="#ffffff" fontWeight="600" textAnchor="middle">СЕРБИЯ</text>
-
-      {/* Надпись РОССИЯ */}
-      <text
-        x="600"
-        y="250"
-        fontSize="48"
-        fill="#1976d2"
-        fontWeight="700"
-        textAnchor="middle"
-        opacity="0.3"
-        letterSpacing="4"
-      >
-        РОССИЯ
-      </text>
-
-      {/* Маркеры для доступных стран */}
-      {availableCountries.map((country) => {
-        const coords = COUNTRY_COORDINATES[country]
-        if (!coords) return null
-
-        const x = (coords.x / 100) * 1200
-        const y = (coords.y / 100) * 800
-
-        return (
-          <g key={country}>
-            {/* Пульсирующий круг для активных маркеров */}
-            {selectedChannel && (
-              <circle
-                cx={x}
-                cy={y}
-                r="20"
-                fill="none"
-                stroke="#000000"
-                strokeWidth="3"
-                opacity="0.3"
-                className="map-marker-pulse"
-              />
-            )}
-            {/* Основной маркер */}
-            <circle
-              cx={x}
-              cy={y}
-              r="14"
-              fill={selectedChannel ? '#000000' : '#3056ff'}
-              stroke="#ffffff"
-              strokeWidth="3"
-              style={{ cursor: 'pointer', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
-            >
-              <title>{country}</title>
-            </circle>
-            {/* Внутренний круг */}
-            <circle
-              cx={x}
-              cy={y}
-              r="6"
-              fill="#ffffff"
-            />
-            {/* Название страны под маркером */}
-            <text
-              x={x}
-              y={y + 35}
-              textAnchor="middle"
-              fill="#000000"
-              fontSize="12"
-              fontWeight="700"
-              style={{
-                textShadow: '0 1px 2px rgba(255,255,255,0.8)',
-                pointerEvents: 'none'
-              }}
-            >
-              {coords.name}
-            </text>
-          </g>
+  // Определяем, какие страны нужно подсветить
+  const getCountryFill = (countryName: string) => {
+    for (const [ourName, geoNames] of Object.entries(COUNTRY_NAME_MAP)) {
+      if (availableCountries.includes(ourName)) {
+        const matches = geoNames.some(geoName => 
+          countryName?.toLowerCase().includes(geoName.toLowerCase())
         )
-      })}
-    </svg>
+        if (matches) {
+          // Россия - светло-голубой
+          if (ourName === 'Россия') return '#e3f2fd'
+          // Другие страны - разные цвета
+          if (ourName === 'Казахстан') return '#9c27b0'
+          if (ourName === 'Беларусь') return '#ce93d8'
+          if (ourName === 'Узбекистан') return '#9e9e9e'
+          if (ourName === 'Киргизия') return '#ba68c8'
+          if (ourName === 'Грузия') return '#7b1fa2'
+          if (ourName === 'Армения') return '#7b1fa2'
+          if (ourName === 'Сербия') return '#9c27b0'
+          return '#e3f2fd'
+        }
+      }
+    }
+    return '#f5f5f5' // Недоступные страны - серый
+  }
+
+  const getCountryStroke = (countryName: string) => {
+    for (const [ourName, geoNames] of Object.entries(COUNTRY_NAME_MAP)) {
+      if (availableCountries.includes(ourName)) {
+        const matches = geoNames.some(geoName => 
+          countryName?.toLowerCase().includes(geoName.toLowerCase())
+        )
+        if (matches) {
+          if (ourName === 'Россия') return '#1976d2'
+          return '#4a148c'
+        }
+      }
+    }
+    return '#e0e0e0'
+  }
+
+  return (
+    <div style={{ width: '100%', height: '600px', background: '#ffffff', borderRadius: 'var(--radius)' }}>
+      <ComposableMap
+        projection="geoMercator"
+        projectionConfig={{
+          center: [60, 55], // Центр на Россию
+          scale: 600
+        }}
+        style={{ width: '100%', height: '100%' }}
+      >
+        <Geographies geography={geoUrl}>
+            {({ geographies }) =>
+              geographies.map((geo) => {
+                const countryName = geo.properties.NAME || geo.properties.NAME_LONG || ''
+                const fill = getCountryFill(countryName)
+                const stroke = getCountryStroke(countryName)
+                
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill={fill}
+                    stroke={stroke}
+                    strokeWidth={0.5}
+                    style={{
+                      default: { 
+                        outline: 'none',
+                        transition: 'all 0.2s'
+                      },
+                      hover: { 
+                        outline: 'none', 
+                        fill: fill === '#f5f5f5' ? '#e0e0e0' : fill,
+                        stroke: stroke === '#e0e0e0' ? '#1976d2' : stroke,
+                        strokeWidth: 1
+                      },
+                      pressed: { outline: 'none' }
+                    }}
+                  />
+                )
+              })
+            }
+          </Geographies>
+
+          {/* Маркеры для доступных стран */}
+          {availableCountries.map((country) => {
+            const countryData = COUNTRY_COORDINATES[country]
+            if (!countryData) return null
+
+            return (
+              <Marker key={country} coordinates={countryData.coords}>
+                <g>
+                  {/* Пульсирующий круг для активных маркеров */}
+                  {selectedChannel && (
+                    <circle
+                      r="20"
+                      fill="none"
+                      stroke="#000000"
+                      strokeWidth="3"
+                      opacity="0.3"
+                      className="map-marker-pulse"
+                    />
+                  )}
+                  {/* Основной маркер */}
+                  <circle
+                    r={selectedChannel ? 10 : 8}
+                    fill={selectedChannel ? '#000000' : '#3056ff'}
+                    stroke="#ffffff"
+                    strokeWidth="3"
+                    style={{ 
+                      cursor: 'pointer',
+                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
+                    }}
+                  />
+                  {/* Внутренний круг */}
+                  <circle r="4" fill="#ffffff" />
+                  {/* Название страны */}
+                  <text
+                    textAnchor="middle"
+                    y={-25}
+                    style={{ 
+                      fontFamily: 'system-ui, -apple-system, sans-serif',
+                      fill: '#000000',
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      textShadow: '0 1px 2px rgba(255,255,255,0.8)',
+                      pointerEvents: 'none'
+                    }}
+                  >
+                    {countryData.name}
+                  </text>
+                </g>
+              </Marker>
+            )
+          })}
+      </ComposableMap>
+    </div>
   )
 }
 
@@ -257,7 +220,8 @@ export function GeoAvailabilityMap({ data }: GeoAvailabilityMapProps) {
           borderRadius: 'var(--radius)',
           overflow: 'hidden',
           background: '#ffffff',
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+          border: '1px solid var(--glass-border)'
         }}
       >
         <WorldMapSVG
@@ -319,7 +283,7 @@ export function GeoAvailabilityMap({ data }: GeoAvailabilityMapProps) {
               >
                 {channel.countries.length > 0 ? (
                   channel.countries.map((country) => {
-                    const coords = COUNTRY_COORDINATES[country]
+                    const countryData = COUNTRY_COORDINATES[country]
                     return (
                       <span
                         key={country}
@@ -335,7 +299,7 @@ export function GeoAvailabilityMap({ data }: GeoAvailabilityMapProps) {
                           alignItems: 'center',
                           gap: '6px',
                           transition: 'all 0.2s',
-                          transform: isSelected && coords ? 'scale(1.05)' : 'scale(1)'
+                          transform: isSelected && countryData ? 'scale(1.05)' : 'scale(1)'
                         }}
                       >
                         {country}
